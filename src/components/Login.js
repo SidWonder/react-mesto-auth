@@ -2,7 +2,7 @@ import React from 'react';
 import Form from './Form';
 
 // eslint-disable-next-line react/prop-types
-export  default function Login( { handleLogin }) {
+export  default function Login( { onLogin  }) {
 
 	const [data, setData] = React.useState({
 		email: '',
@@ -24,7 +24,7 @@ export  default function Login( { handleLogin }) {
 		if (!email || !password) {
 			return;
 		}
-		handleLogin(email, password);
+		onLogin (email, password);
 	}
 
 	return (

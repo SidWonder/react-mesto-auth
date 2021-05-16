@@ -69,7 +69,6 @@ function App() {
 				}
 			})
 			.then((res) => {
-				console.log(res);
 				const data = res.data ? res.data : {};
 				setUserInfo(data);
 			});
@@ -78,7 +77,6 @@ function App() {
 	React.useEffect(() => {
 		tokenCheck();
 		if (isLoggedIn) {
-			console.log(history);
 			history.push('/');
 		}
 	}, [isLoggedIn]);
@@ -114,7 +112,6 @@ function App() {
 	}
 
 	function handleUpdateAvatar(userData) {
-		console.log(userData);
 		api.setUserAvatar(userData).then((data) => {
 			setCurrentUser(data);
 		}).catch((err) => { console.log(err); });
@@ -150,13 +147,11 @@ function App() {
 	}
 
 	function handleRegister(email, password) {
-		console.log(email, password);
 		auth.register(email, password)
 			.then((res) => {
 				if (res.status === 400) {
 					setRegisterIsOk(false);
 					setShowInfoTooltip(true);
-					console.log(res);
 					throw new Error('некорректно заполнено одно из полей');
 				} else {
 					setRegisterIsOk(true);
@@ -184,6 +179,12 @@ function App() {
 			.catch((e) => console.log(e));
 	}
 
+	function handleSignOut(){
+		localStorage.removeItem('token');
+		history.push('/sign-in');
+		setIsLogged(false);
+	}
+
 	const closeInfoTooltipSuccess = () => {
 		setShowInfoTooltip(false);
 		history.push('/sign-in');
@@ -192,7 +193,6 @@ function App() {
 	const closeInfoTooltipFailure = () => {
 		setShowInfoTooltip(false);
 	};
-console.log(isLoggedIn);
 	return (
 		<CurrentUserContext.Provider value={currentUser}>
 			<div className="page__content">
@@ -200,15 +200,15 @@ console.log(isLoggedIn);
 					<Header 
 						isLoggedIn={isLoggedIn}
 						setLogged={setIsLogged}
+						onSignOut={handleSignOut}
 						userInfo={userInfo}
 						setUserInfo={setUserInfo}/>
-
 						<Switch>
 							<Route path='/sign-up'>
-								<Register handleRegister={handleRegister}/>
+								<Register onRegister={handleRegister}/>
 							</Route>
 							<Route path='/sign-in'>
-								<Login  handleLogin={handleLogin} tokenCheck={tokenCheck} />
+								<Login  onLogin ={handleLogin} tokenCheck={tokenCheck} />
 							</Route>
 							<ProtectedRoute
 								path="/"
@@ -248,9 +248,6 @@ console.log(isLoggedIn);
 					buttonText='Да'
 					isOpen={false}
 					closeIt={handleCloseAll}
-							   /* eslint-disable-next-line react/no-children-prop */
-					children={<>
-					</>}
 				/>
 				{selectedCard._id && <ImagePopup card={selectedCard} closeIt={handleCloseAll}/>}
 				{showInfoTooltip && (

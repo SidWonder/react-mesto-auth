@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
-export default function Header({isLoggedIn, setLogged, userInfo, setUserInfo}) {
+export default function Header({isLoggedIn, setLogged, onSignOut, userInfo, setUserInfo}) {
 	// eslint-disable-next-line react/prop-types
 	const { email } = userInfo;
 	const currentLocation = useLocation();
@@ -21,11 +21,7 @@ export default function Header({isLoggedIn, setLogged, userInfo, setUserInfo}) {
 				{isLoggedIn ? (
 					<Link
 						to='/'
-						onClick={() => {
-							localStorage.setItem('token', '');
-							setLogged(false);
-							setUserInfo('');
-						}}
+						onClick={() => onSignOut()}
 						className="header__link"
 					>
 						Выйти

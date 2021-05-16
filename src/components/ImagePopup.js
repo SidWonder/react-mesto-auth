@@ -4,7 +4,6 @@ import React from 'react';
 export default function ImagePopup({isOpen, card, closeIt}) {
 	// eslint-disable-next-line react/prop-types
 	const {name, link} = card;
-	console.log(card);
 	return (
 		<div className={'popup popup-image popup_active'}>
 			<div className="popup__container popup__container_image">

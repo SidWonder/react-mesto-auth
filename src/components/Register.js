@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Form from './Form';
 
 // eslint-disable-next-line react/prop-types
-export default function Register ({handleRegister}) {
+export default function Register ({onRegister}) {
 	const [data, setData] = React.useState({
 		email: '',
 		password: '',
@@ -21,7 +21,7 @@ export default function Register ({handleRegister}) {
 		function handleSubmit(evt) {
 			evt.preventDefault();
 			const {email, password} = data;
-			handleRegister(email, password);
+			onRegister(email, password);
 		}
 
 	return (<>
