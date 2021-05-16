@@ -9,9 +9,8 @@ import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import '../index.css';
 import api from '../utils/api';
-import * as auth from '../utils/auth';
+import * as auth from '../auth';
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
@@ -19,15 +18,15 @@ import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
-	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = React.useState(false);
-	const [isEditProfilePopupOpen, setPopupProfileState] = React.useState(false);
-	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+	const [isEditAvatarPopupOpen, setIsAvatarPopupOpen] = React.useState(false);
+	const [isEditProfilePopupOpen, setIsPopupProfileState] = React.useState(false);
+	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 	const [selectedCard, setSelectedCard] = React.useState({});
 
 	const [currentUser, setCurrentUser] = React.useState({});
 	const [cards, setCards] = React.useState([]);
 
-	const [isLoggedIn, setLogged] = React.useState(Boolean(localStorage.getItem('token')));
+	const [isLoggedIn, setIsLogged] = React.useState(Boolean(localStorage.getItem('token')));
 	const [userInfo, setUserInfo] = React.useState({});
 	const [registerIsOk, setRegisterIsOk] = React.useState(false);
 	const [showInfoTooltip, setShowInfoTooltip] = React.useState(false);
@@ -85,15 +84,15 @@ function App() {
 	}, [isLoggedIn]);
 
 	function handleEditAvatarClick() {
-		setAvatarPopupOpen(true);
+		setIsAvatarPopupOpen(true);
 	}
 
 	function handleEditProfileClick() {
-		setPopupProfileState(true);
+		setIsPopupProfileState(true);
 	}
 
 	function handleAddPlaceClick() {
-		setAddPlacePopupOpen(true);
+		setIsAddPlacePopupOpen(true);
 	}
 
 	function handleCardClick(card) {
@@ -101,9 +100,9 @@ function App() {
 	}
 
 	function handleCloseAll() {
-		setPopupProfileState(false);
-		setAvatarPopupOpen(false);
-		setAddPlacePopupOpen(false);
+		setIsPopupProfileState(false);
+		setIsAvatarPopupOpen(false);
+		setIsAddPlacePopupOpen(false);
 		setSelectedCard({});
 	}
 
@@ -172,7 +171,7 @@ function App() {
 			.authorize(email, password)
 			.then((data) => {
 				if (data.token) {
-					setLogged(true);
+					setIsLogged(true);
 					localStorage.setItem('token', data.token);
 				} else if (data.status === 400) {
 					throw new Error('не передано одно из полей');
@@ -200,7 +199,7 @@ console.log(isLoggedIn);
 				<div className="page">
 					<Header 
 						isLoggedIn={isLoggedIn}
-						setLogged={setLogged}
+						setLogged={setIsLogged}
 						userInfo={userInfo}
 						setUserInfo={setUserInfo}/>
 

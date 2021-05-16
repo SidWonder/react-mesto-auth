@@ -3,61 +3,62 @@ import PopupWithForm from './PopupWithForm';
 
 // eslint-disable-next-line react/prop-types
 export default function AddPlacePopup({isOpen, closeIt, onUpdatePlace}) {
-	const [placeName, setPlaceName] = React.useState('');
-	const [placeLink, setPlaceLink] = React.useState('');
+    const [placeName, setPlaceName] = React.useState('');
+    const [placeLink, setPlaceLink] = React.useState('');
 
-	function handlePlaceNameChange(e) {
-		setPlaceName(e.target.value);
-	}
+    React.useEffect(() => {
+        setPlaceName('');
+        setPlaceLink('');
+    }, [isOpen])
 
-	function handlePlaceLinkChange(e) {
-		setPlaceLink(e.target.value);
-	}
+    function handlePlaceNameChange(e) {
+        setPlaceName(e.target.value);
+    }
 
-	function handleSubmit(e) {
-		e.preventDefault();
+    function handlePlaceLinkChange(e) {
+        setPlaceLink(e.target.value);
+    }
 
-		onUpdatePlace({
-			name: placeName,
-			link: placeLink,
-		});
-	}
+    function handleSubmit(e) {
+        e.preventDefault();
 
-	return(  <PopupWithForm name='popup-place'
-		title='Новое место'
-		buttonText='Создать'
-		isOpen={isOpen}
-		closeIt={closeIt}
-		onSubmit={handleSubmit}
-							/* eslint-disable-next-line react/no-children-prop */
-		children={
-			<>
-				<label className="form__label">
-					<input id="place-title-change"
-						className="form__input"
-						type="text"
-						name="place-title"
-						placeholder="Название"
-						minLength="1"
-						maxLength="30"
-						value={placeName}
-						onChange={handlePlaceNameChange}
-						required/>
-					<span className="form__error" id="place-title-change-error"></span>
-				</label>
-				<label className="form__label">
-					<input className="form__input"
-						type="url"
-						id="place-url-change"
-						name="place-url"
-						placeholder="Ссылка на картинку"
-						minLength="1"
-						value={placeLink}
-						onChange={handlePlaceLinkChange}
-						required
-					/>
-					<span className="form__error" id="place-url-change-error"></span>
-				</label>
-			</>}
-	/>);
-}
+        onUpdatePlace({
+            name: placeName,
+            link: placeLink,
+        });
+    }
+
+    return (
+    	<PopupWithForm name='popup-place'
+                           title='Новое место'
+                           buttonText='Создать'
+                           isOpen={isOpen}
+                           closeIt={closeIt}
+                           onSubmit={handleSubmit}>
+        <label className="form__label">
+            <input id="place-title-change"
+                   className="form__input"
+                   type="text"
+                   name="place-title"
+                   placeholder="Название"
+                   minLength="1"
+                   maxLength="30"
+                   value={placeName}
+                   onChange={handlePlaceNameChange}
+                   required/>
+            <span className="form__error" id="place-title-change-error"></span>
+        </label>
+        <label className="form__label">
+            <input className="form__input"
+                   type="url"
+                   id="place-url-change"
+                   name="place-url"
+                   placeholder="Ссылка на картинку"
+                   minLength="1"
+                   value={placeLink}
+                   onChange={handlePlaceLinkChange}
+                   required
+            />
+            <span className="form__error" id="place-url-change-error"></span>
+        </label>
+        </PopupWithForm>)};

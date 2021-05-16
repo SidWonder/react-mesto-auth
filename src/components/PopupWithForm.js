@@ -9,8 +9,6 @@ export default function PopupWithForm({name, title, buttonText,isOpen, closeIt ,
 				<form id="profile-edit" className="form" name="profile-edit" noValidate>
 					{children}
 					<button
-						/*disabled id="popup__profile-confirm-changes" type="submit"
-                    * className="form__button form__button_disabled"*/
 						onClick={onSubmit}
 						className="form__button">{buttonText}
 					</button>

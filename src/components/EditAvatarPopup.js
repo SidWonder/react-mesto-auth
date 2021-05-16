@@ -22,9 +22,7 @@ export default function EditAvatarPopup ({isOpen, closeIt, onUpdateAvatar}) {
 			isOpen={isOpen}
 			closeIt={closeIt}
 			onSubmit={handleSubmit}
-					   /* eslint-disable-next-line react/no-children-prop */
-			children={
-				<>
+		>
 					<label className="form__label">
 						<input className="form__input"
 							type="url"
@@ -37,7 +35,5 @@ export default function EditAvatarPopup ({isOpen, closeIt, onUpdateAvatar}) {
 						/>
 						<span className="form__error" id="avatar-url-change-error"></span>
 					</label>
-				</>}
-
-		/>);
+			</PopupWithForm>);
 }
