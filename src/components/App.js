@@ -10,7 +10,7 @@ import ImagePopup from './ImagePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 import api from '../utils/api';
-import * as auth from '../auth';
+import * as auth from '../utils/auth';
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
@@ -21,12 +21,13 @@ function App() {
 	const [isEditAvatarPopupOpen, setIsAvatarPopupOpen] = React.useState(false);
 	const [isEditProfilePopupOpen, setIsPopupProfileState] = React.useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+	const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
 	const [selectedCard, setSelectedCard] = React.useState({});
 
 	const [currentUser, setCurrentUser] = React.useState({});
 	const [cards, setCards] = React.useState([]);
 
-	const [isLoggedIn, setIsLogged] = React.useState(Boolean(localStorage.getItem('token')));
+	const [isLoggedIn, setIsLogged] = React.useState(false);
 	const [userInfo, setUserInfo] = React.useState({});
 	const [registerIsOk, setRegisterIsOk] = React.useState(false);
 	const [showInfoTooltip, setShowInfoTooltip] = React.useState(false);
@@ -70,8 +71,10 @@ function App() {
 			})
 			.then((res) => {
 				const data = res.data ? res.data : {};
+				setIsLogged(true);
 				setUserInfo(data);
-			});
+			})
+			.catch((err) => console.log(err));
 	}
 
 	React.useEffect(() => {
@@ -94,6 +97,7 @@ function App() {
 	}
 
 	function handleCardClick(card) {
+		setIsImagePopupOpen(true);
 		setSelectedCard(card);
 	}
 
@@ -101,21 +105,22 @@ function App() {
 		setIsPopupProfileState(false);
 		setIsAvatarPopupOpen(false);
 		setIsAddPlacePopupOpen(false);
+		setIsImagePopupOpen(false);
 		setSelectedCard({});
 	}
 
 	function handleUpdateUser(userData) {
 		api.setUserInfo(userData).then((data) => {
 			setCurrentUser(data);
+			handleCloseAll();
 		}).catch((err) => { console.log(err); });
-		handleCloseAll();
 	}
 
 	function handleUpdateAvatar(userData) {
 		api.setUserAvatar(userData).then((data) => {
 			setCurrentUser(data);
+			handleCloseAll();
 		}).catch((err) => { console.log(err); });
-		handleCloseAll();
 	}
 
 
@@ -142,8 +147,8 @@ function App() {
 	function handleAddPlace(placeData) {
 		api.addNewCard(placeData).then((data) => {
 			setCards([data, ...cards]);
+			handleCloseAll();
 		}).catch((err) => { console.log(err); });
-		handleCloseAll();
 	}
 
 	function handleRegister(email, password) {
@@ -176,7 +181,7 @@ function App() {
 					throw new Error('что-то пошло не так');
 				}
 			})
-			.catch((e) => console.log(e));
+			.catch((err) => console.log(err));
 	}
 
 	function handleSignOut(){
@@ -211,7 +216,7 @@ function App() {
 								<Login  onLogin ={handleLogin} tokenCheck={tokenCheck} />
 							</Route>
 							<ProtectedRoute
-								path="/"
+								exact path="/"
 								isLoggedIn={isLoggedIn}
 								component={Main}
 								onEditAvatar={handleEditAvatarClick}
@@ -249,7 +254,7 @@ function App() {
 					isOpen={false}
 					closeIt={handleCloseAll}
 				/>
-				{selectedCard._id && <ImagePopup card={selectedCard} closeIt={handleCloseAll}/>}
+				<ImagePopup isOpen={isImagePopupOpen} card={selectedCard} closeIt={handleCloseAll}/>
 				{showInfoTooltip && (
 					<InfoTooltip
 						onClose={registerIsOk ? closeInfoTooltipSuccess : closeInfoTooltipFailure}

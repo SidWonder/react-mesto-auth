@@ -60,7 +60,11 @@ export  default function Login( { onLogin  }) {
 					/>
 					<span className="form__error" id="password-input-error" />
 				</label>
-				<button type="submit" className="authform__button" onClick={handleSubmit}>
+				<button
+				onSubmit={handleSubmit}
+					type="submit"
+					className="authform__button"
+				>
 					Войти
 				</button>
 			</Form>

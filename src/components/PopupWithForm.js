@@ -6,11 +6,14 @@ export default function PopupWithForm({name, title, buttonText,isOpen, closeIt ,
 		<div className={`popup popup-${name} ${isOpen ? 'popup_active' : ''}`}>
 			<div className="popup__container">
 				<h3 className="popup__title">{title}</h3>
-				<form id="profile-edit" className="form" name="profile-edit" noValidate>
+				<form id="profile-edit" className="form" name="profile-edit" noValidate onSubmit={onSubmit}>
 					{children}
 					<button
-						onClick={onSubmit}
-						className="form__button">{buttonText}
+						type='submit'
+						className="form__button"
+						onSubmit={onSubmit}
+					>{buttonText}
+
 					</button>
 				</form>
 				<button

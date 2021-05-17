@@ -25,7 +25,7 @@ export default function Register ({onRegister}) {
 		}
 
 	return (<>
-		<Form name="register-form" title="Регистрация">
+		<Form name="register-form" title="Регистрация" onSubmit={handleSubmit}>
 			<label className="authform__label">
 				<input
 					type="email"
@@ -56,7 +56,11 @@ export default function Register ({onRegister}) {
 				/>
 				<span className="form__error" id="password-input-error" />
 			</label>
-			<button type="submit" className="authform__button" onClick={handleSubmit}>
+			<button
+				onSubmit={handleSubmit}
+				type="submit"
+				className="authform__button"
+			>
 				Зарегистрироваться
 			</button>
 			<p className="authform__login">

@@ -30,9 +30,8 @@ export default function Card({card, onCardClick, onCardLike, onCardDelete}) {
 	}
 
 	return (
-		<CurrentUserContext.Provider value={currentUser}>
 			<article className="place">
-				<img src={link} alt="#" loading="lazy" className="place__img" onClick={handleClick}/>
+				<img src={link} alt={name} loading="lazy" className="place__img" onClick={handleClick}/>
 				<div className="place__wrapper">
 					<h3 className="place__title">{name}</h3>
 					<button type="button"
@@ -44,6 +43,5 @@ export default function Card({card, onCardClick, onCardLike, onCardDelete}) {
 				</div>
 				{isOwn && <DeleteBtn/>}
 			</article>
-		</CurrentUserContext.Provider>
 	);
 }

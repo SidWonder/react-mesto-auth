@@ -9,7 +9,6 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
 	const currentUser = React.useContext(CurrentUserContext);
 	const {about, name, avatar} = currentUser;
 	return (
-		<CurrentUserContext.Provider value={currentUser}>
 			<main className="content">
 				<section className="profile">
 					<div onClick={onEditAvatar} className="profile__avatar-wrapper">
@@ -38,16 +37,15 @@ export default function Main({onEditAvatar, onEditProfile, onAddPlace, onCardCli
 				</section>
 				<section className="places">
 					{/* eslint-disable-next-line react/prop-types */}
-					{cards.map((card) =>
-
+					{cards.map((card) =>(
 						<Card key={card._id}
-							card={card}
-							onCardLike={onCardLike}
-							onCardDelete={onCardDelete}
-							onCardClick={onCardClick}/>
+							  card={card}
+							  onCardLike={onCardLike}
+							  onCardDelete={onCardDelete}
+							  onCardClick={onCardClick}/>
+						)
 					)}
 				</section>
 			</main>
-		</CurrentUserContext.Provider>
 	);
 }
