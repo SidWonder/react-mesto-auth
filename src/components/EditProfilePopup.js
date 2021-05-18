@@ -37,7 +37,7 @@ export default function EditProfilePopup({isOpen, closeIt, onUpdateUser}) {
                        buttonText='Сохранить'
                        isOpen={isOpen}
                        closeIt={closeIt}
-                       onSubmit={()=> handleSubmit}
+                       onSubmit={handleSubmit.bind(this)}
         >
             <label className="form__label">
                 <input className="form__input"

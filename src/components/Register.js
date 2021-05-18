@@ -57,7 +57,6 @@ export default function Register ({onRegister}) {
 				<span className="form__error" id="password-input-error" />
 			</label>
 			<button
-				onSubmit={handleSubmit}
 				type="submit"
 				className="authform__button"
 			>

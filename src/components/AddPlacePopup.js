@@ -34,7 +34,7 @@ export default function AddPlacePopup({isOpen, closeIt, onUpdatePlace}) {
                            buttonText='Создать'
                            isOpen={isOpen}
                            closeIt={closeIt}
-                           onSubmit={handleSubmit}>
+                            onSubmit={handleSubmit.bind(this)}>
         <label className="form__label">
             <input id="place-title-change"
                    className="form__input"
