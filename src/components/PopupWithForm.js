@@ -6,6 +6,7 @@ export default function PopupWithForm({name, title, buttonText,isOpen, closeIt ,
 		<div className={`popup popup-${name} ${isOpen ? 'popup_active' : ''}`}>
 			<div className="popup__container">
 				<h3 className="popup__title">{title}</h3>
+				{/* eslint-disable-next-line react/prop-types */}
 				<form className="form" name={name} noValidate onSubmit={onSubmit}>
 					{children}
 					<button
